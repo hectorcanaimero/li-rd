@@ -1,0 +1,127 @@
+{
+  "cliente": {
+    "cnpj": "None", 
+    "cpf": "70653456298", 
+    "data_nascimento": "1984-09-10", 
+    "email": "hector@vanguardacomunicacao.com.br", 
+    "id": 14935652, 
+    "nome": "HECTOR VALASQUEZ", 
+    "razao_social": "None", 
+    "resource_uri": "/api/v1/cliente/14935652", 
+    "sexo": "m", 
+    "telefone_celular": "92981702028", 
+    "telefone_principal": ""
+  }, 
+  "cliente_obs": "None", 
+  "cupom_desconto": "None", 
+  "data_criacao": "2019-05-23T17:19:12.265681", 
+  "data_expiracao": "2019-05-29T17:19:12.360427", 
+  "data_modificacao": "2019-05-23T17:19:16.209885",
+  "endereco_entrega": {
+    "bairro": "São José Operário", 
+    "cep": "69085200", 
+    "cidade": "Manaus", 
+    "cnpj": "None", 
+    "complemento": "", 
+    "cpf": "70653456298", 
+    "endereco": "Rua Xiborena", 
+    "estado": "AM", 
+    "id": 12224284, 
+    "ie": "None", 
+    "nome": "HECTOR VALASQUEZ", 
+    "numero": "256", 
+    "pais": "Brasil", 
+    "razao_social": "None", 
+    "referencia": "", 
+    "rg": "None", 
+    "tipo": "PF"
+  }, 
+  "envios": [
+    {
+      "data_criacao": "2019-05-23T17:19:12.285225", 
+      "data_modificacao": "2019-05-23T17:19:12.285249", 
+      "forma_envio": {
+        "code": "retirar_pessoalmente", 
+        "id": 12015, 
+        "nome": "Retirar pessoalmente", 
+        "tipo": "None"
+      }, 
+      "id": 19380041, 
+      "objeto": "None", 
+      "prazo": 1, 
+      "valor": "0.00"
+    }
+  ], 
+  "id_anymarket": "None", 
+  "id_externo": "None", 
+  "itens": [
+    {
+      "altura": "None", 
+      "disponibilidade": 0, 
+      "id": 38560364, 
+      "largura": "None", 
+      "linha": 1, 
+      "ncm": "", 
+      "nome": "Test 2", 
+      "pedido": "/api/v1/pedido/1", 
+      "peso": "None", 
+      "preco_cheio": "120.0000", 
+      "preco_custo": "None", 
+      "preco_promocional": "None", 
+      "preco_subtotal": "120.0000", 
+      "preco_venda": "120.0000", 
+      "produto": "/api/v1/produto/38039051", 
+      "produto_pai": "None", 
+      "profundidade": "None", 
+      "quantidade": "1.000", 
+      "sku": "7W9BE8YLX", 
+      "tipo": "normal"
+    }
+  ], 
+  "numero": 1, 
+  "pagamentos": [
+    {
+      "authorization_code": "None", 
+      "banco": "None", 
+      "bandeira": "None", 
+      "codigo_retorno_gateway": "None", 
+      "forma_pagamento": {
+        "codigo": "entrega", 
+        "configuracoes": {
+          "ativo": "True", 
+          "disponivel": "True"
+        }, 
+        "id": 13, 
+        "imagem": "https://cdn.awsli.com.br/production/static/painel/img/formas-de-pagamento/entrega-logo.png", 
+        "nome": "Pagamento na entrega", 
+        "resource_uri": "/api/v1/pagamento/13"
+      }, 
+      "id": 19380213, 
+      "identificador_id": "None", 
+      "mensagem_gateway": "None", 
+      "pagamento_tipo": "custom201PaymentGroup", 
+      "parcelamento": {}, 
+      "transacao_id": "None", 
+      "valor": "120.00",
+      "valor_pago": "120.00"
+    }
+  ], 
+  "peso_real": "0.000", 
+  "resource_uri": "/api/v1/pedido/1", 
+  "situacao": {
+    "aprovado": "False", 
+    "cancelado": "False", 
+    "codigo": "pedido_efetuado", 
+    "final": "False", 
+    "id": 9, 
+    "nome": "Pedido Efetuado", 
+    "notificar_comprador": "False", 
+    "padrao": "True", 
+    "resource_uri": "/api/v1/situacao/9"
+  }, 
+  "utm_campaign": "None", 
+  "valor_desconto": "0.00", 
+  "valor_envio": "0.00", 
+  "valor_subtotal": "120.00", 
+  "valor_total": "120.00"
+}
