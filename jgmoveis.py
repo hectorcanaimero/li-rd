@@ -1,10 +1,13 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
+
 
 import json
 import requests as req
 import MySQLdb
 from pprint import pprint
-
+import os
+import datetime
 
 class Automated():
 
@@ -42,31 +45,27 @@ class Automated():
   def insertClient(self, data):
     ID = data.get('id')
     print(ID)
-    try:
-      conn = self.createDefCon()
-      add = conn.cursor()
-      add.execute("""
-        INSERT INTO cliente (clienteId) VALUES (%d)
-    """ %ID)
-      conn.commit()
-      output = {
-        'token_rdstation': self.rdApi,
-        'identificador': 'LI - Novo Cliente',
-        'email': data.get('email'),
-        'nome': data.get('nome'),
-        'data_nascimento': data.get('data_nascimento'),
-        'sexo': data.get('sexo'),
-        'rg': data.get('rg'),
-        'tipo': data.get('tipo'),
-        'cnpj': data.get('cnpj'),
-        'cpf': data.get('cpf'),
-        'razao_social': data.get('razao_social'),
-        'ie': data.get('ie')
-      }
-      #pprint(output)
-      self.rdStastion(output)
-    except MySQLdb.Error as e:
-      print ("Error:%d:%s" %(e.args[0], e.args[1]))
+    conn = self.createDefCon()
+    add = conn.cursor()
+    add.execute("""
+      INSERT INTO cliente (clienteId) VALUES (%d)
+      """ %ID)
+    output = {
+      'token_rdstation': self.rdApi,
+      'identificador': 'LI - Novo Cliente',
+      'email': data.get('email'),
+      'nome': data.get('nome'),
+      'data_nascimento': data.get('data_nascimento'),
+      'sexo': data.get('sexo'),
+      'rg': data.get('rg'),
+      'tipo': data.get('tipo'),
+      'cnpj': data.get('cnpj'),
+      'cpf': data.get('cpf'),
+      'razao_social': data.get('razao_social'),
+      'ie': data.get('ie')
+    }
+    #pprint(output)
+    self.rdStastion(output)
 
   ## Pedido
   def pedido(self):
@@ -94,52 +93,27 @@ class Automated():
 
   def insertPedido(self, pedidoId):
     urlPedido = 'https://api.awsli.com.br/v1/pedido/%d?format=json&chave_api=%s&chave_aplicacao=%s' %(pedidoId, self.lojaApi, self.lojaChave)
-    data = json.loads(req.get(urlPedido).text)
-    for iten in data['itens']:
-      pprint(iten.get('nome'))
-      pprint(iten.get('sku'))
-      pprint(iten.get('preco_venda'))
-      pprint(iten.get('quantidade'))
-    pprint(data['cliente'].get('email'))
-    pprint(data.get('valor_total'))
-    pprint(data['endereco_entrega'].get('bairro'))
-    pprint(data['endereco_entrega'].get('numero'))
-    pprint(data['endereco_entrega'].get('cep'))
-    for envio in data['envios']:
-      pprint(envio['forma_envio'].get('nome'))
-    pprint(data['situacao'].get('nome'))
-    for pag in data['pagamentos']:
-      pprint(pag['forma_pagamento'].get('nome'))
-
-
-
-    # try:
-    #   conn = self.createDefCon()
-    #   add = conn.cursor()
-    #   add.execute("""
-    #     INSERT INTO pedido (pedidoId) VALUES (%d)
-    # """ %pedidoId)
-    #   conn.commit()
-    #   print(data.get())
-    #   # output = {
-    #   #   'token_rdstation': self.rdApi,
-    #   #   'identificador': 'LI - Pedido',
-    #   #   'email': data.get('email'),
-    #   #   'nome': data.get('nome'),
-    #   #   'data_nascimento': data.get('data_nascimento'),
-    #   #   'sexo': data.get('sexo'),
-    #   #   'rg': data.get('rg'),
-    #   #   'tipo': data.get('tipo'),
-    #   #   'cnpj': data.get('cnpj'),
-    #   #   'cpf': data.get('cpf'),
-    #   #   'razao_social': data.get('razao_social'),
-    #   #   'ie': data.get('ie')
-    #   # }
-    #   #pprint(output)
-    #   self.rdStastion(output)
-    # except MySQLdb.Error as e:
-    #   print ("Error:%d:%s" %(e.args[0], e.args[1]))
-
+    store = req.get(urlPedido).text
+    data = json.loads(store)
+    itens = []
+    conn = self.createDefCon()
+    add = conn.cursor()
+    add.execute("""
+      INSERT INTO pedido (pedidoId) VALUES (%d)
+    """ %pedidoId)
+    for n in range(len(data['itens'])):
+      itens.append("Produto -%d: %s" %(n+1, data['itens'][n].get('nome')))
+      itens.append("Quantidade -%d: %s" %(n+1, data['itens'][n].get('quantidade')))
+      itens.append("Preço Venda -%d: %s" %(n+1, data['itens'][n].get('preco_venda')))
+    output = {
+      'token_rdstation': self.rdApi,
+      'identificador': 'LI - Pedido',
+      'email': data['cliente'].get('email'),
+      'valor_total': data.get('valor_total'),
+      'Itens': itens
+    }
+    pprint(output)
+    self.rdStastion(output)
 
   ## Rd Station Integração
   def rdStastion(self, data):
@@ -161,8 +135,17 @@ class Automated():
       return con
     except: 
       return 0
+  
+  def text(self):
+    now = datetime.datetime.now()
+    file = open("/home/usuario/Documentos/python/vangi/jg_"+str(now)+".txt", "w")
+    file.write("Primera línea" + os.linesep)
+    file.write("Segunda línea")
+    file.write("Hora: " + str(now))
+    file.close()
 
 
 bot = Automated()
-# bot.cliente()
-bot.insertPedido(2)
+bot.cliente()
+bot.pedido()
+bot.text()
